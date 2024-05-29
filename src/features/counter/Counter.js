@@ -4,8 +4,10 @@ import {
   decrement,
   increment,
   incrementByAmount,
+  dicrementByAmount,
   incrementAsync,
   incrementIfOdd,
+  dicrementIfEven,
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
@@ -43,6 +45,13 @@ export function Counter() {
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
+
+        <input
+          className={styles.textbox}
+          aria-label="Empty"
+          value={count % 10 === 0 ? count : "empty"}
+        />
+
         <button
           className={styles.button}
           onClick={() => dispatch(incrementByAmount(incrementValue))}
@@ -61,6 +70,21 @@ export function Counter() {
         >
           Add If Odd
         </button>
+
+        <button
+          className={styles.button}
+          onClick={() => dispatch(dicrementByAmount(incrementValue))}
+        >
+          Minus Amount
+        </button>
+
+        <button
+          className={styles.button}
+          onClick={() => dispatch(dicrementIfEven(incrementValue))}
+        >
+          Minus If Even
+        </button>
+
       </div>
     </div>
   );

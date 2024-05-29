@@ -6,11 +6,6 @@ const initialState = {
   status: 'idle',
 };
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched. Thunks are
-// typically used to make async requests.
 export const incrementAsync = createAsyncThunk(
   'counter/fetchCount',
   async (amount) => {
@@ -26,10 +21,7 @@ export const counterSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
+
       state.value += 1;
     },
     decrement: (state) => {
@@ -38,6 +30,9 @@ export const counterSlice = createSlice({
     // Use the PayloadAction type to declare the contents of `action.payload`
     incrementByAmount: (state, action) => {
       state.value += action.payload;
+    },
+    dicrementByAmount: (state, action) => {
+      state.value -= action.payload;
     },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -54,7 +49,7 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { increment, decrement, incrementByAmount, dicrementByAmount } = counterSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -70,4 +65,20 @@ export const incrementIfOdd = (amount) => (dispatch, getState) => {
   }
 };
 
+export const dicrementIfEven = (amount) => (dispatch, getState) => {
+  const currentValue = selectCount(getState());
+  if (currentValue % 2 === 0) {
+    dispatch(dicrementByAmount(amount));
+  }
+};
+
+// export const checkValue = (amount) => (dispatch, getState) => {
+//   const currentValue = selectCount(getState());
+//   if (currentValue % 10 === 0) {
+//     inpu = currentValue;
+//   }
+//   else{
+//     value = 'empty';
+//   }
+// };
 export default counterSlice.reducer;
